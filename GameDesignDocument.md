@@ -1,6 +1,4 @@
-# _"Tu kiedyś będzie nazwa gry"_ — Gra Roguelike 
-
----
+# _"Tu kiedyś będzie nazwa gry"_ — Gra Roguelike
 
 ## Krótki opis fabuły
 
