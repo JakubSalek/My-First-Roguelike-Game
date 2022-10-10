@@ -53,3 +53,9 @@ Walka odbywać się będzie turowo i bazować będzie na statystykach bohatera i
 Bohater będzie mógł także używać przedmiotów, które mogą zmienić bieg walki.
 
 ---
+
+## Język programowania
+
+Językiem, w którym gra zostanie napisana, jest Python (Z ewentualną możliwością zmiany).
+
+---
