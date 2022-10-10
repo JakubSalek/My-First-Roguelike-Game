@@ -6,7 +6,7 @@ Bohater otrzymał zadanie stworzenia gry Roguelike, przemierza w tym celu piętr
 
 ## Bohater
 
-Postacią, którą będziemy sterować jest student UMCS-u.
+Postacią, którą będziemy sterować jest student.
 
 ## Turowość
 
