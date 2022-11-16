@@ -23,4 +23,7 @@ class Tile:
 
 
 class dungeonMap:
+    def __init__(self, screenSizeX, screenSizeY):
+        self.tileSizeX = int(screenSizeX/64)
+        self.tileSizeY = int(screenSizeY/36)
     tilesList = []
