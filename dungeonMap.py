@@ -1,29 +1,39 @@
 from enum import Enum
 
+from Entity import Entity, EntityTypes
+
 
 class Tile_Type(Enum):
-    EMPTY = 1
-    WALL = 2
-    FLOOR = 3
-    STAIRS = 4
-    DOOR_OPEN = 5
-    DOOR_CLOSED = 6
-    DOOR_KEY = 7
-    VOID = 8
+    WALL = 1
+    FLOOR = 2
+    STAIRS = 3
+    DOOR_OPEN = 4
+    DOOR_CLOSED = 5
+    DOOR_KEY = 6
+    EMPTY = 7
 
 
-class Tile:
-    items = []
-    enemy = None
-    type = Tile_Type.EMPTY
+class Tile(Entity):
+    def __init__(self):
+        self.setType(EntityTypes.ENVIRONMENT)
+
+    creature = None
+    tileType = Tile_Type.EMPTY
 
     def can_pass(self):
         # funkcja
-        pass
+        if self.tileType in [Tile_Type.FLOOR, Tile_Type.EMPTY, Tile_Type.DOOR_OPEN, Tile_Type.STAIRS] \
+                and self.creature is None:
+            return True
+        else:
+            return False
 
 
 class dungeonMap:
-    def __init__(self, screenSizeX, screenSizeY):
-        self.tileSizeX = int(screenSizeX/64)
-        self.tileSizeY = int(screenSizeY/36)
-    tilesList = []
+    tileMap = [[Tile for i in range(100)] for j in range(100)]
+    for i in range(100):
+        for j in range(100):
+            tileMap[i][j].tileType = Tile_Type.FLOOR
+    for i in range(10, 25):
+        for j in range(5, 15):
+            tileMap[i][j].tileType = Tile_Type.WALL
