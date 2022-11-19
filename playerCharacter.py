@@ -1,13 +1,19 @@
 import pygame
-from Entity import Entity, EntityTypes
+from Actor import Actor
+from GUI import GraphicElement
 
 
 # Klasa bohatera gry
-class Hero(Entity):
+class Hero(Actor):
     heroTurn = False
 
     def __init__(self):
-        self.setType(EntityTypes.CHARACTER)
+        self.name = "Hero of the Game"
+        self.description = "Student of University of Marie Curie Skłodowska"
+        self.actorStats.initPlayer()
+        self.positionX = 15
+        self.positionY = 8
+        self.graphic = GraphicElement().initPlayer(self.positionX, self.positionY)
 
     def setHeroTurn(self, heroTurn):
         self.heroTurn = heroTurn
@@ -22,14 +28,14 @@ class Hero(Entity):
                     exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.move("UP")
-                        self.setHeroTurn(False)
+                        if self.move("UP"):
+                            self.setHeroTurn(False)
                     if event.key == pygame.K_DOWN:
-                        self.move("DOWN")
-                        self.setHeroTurn(False)
+                        if self.move("DOWN"):
+                            self.setHeroTurn(False)
                     if event.key == pygame.K_LEFT:
-                        self.move("LEFT")
-                        self.setHeroTurn(False)
+                        if self.move("LEFT"):
+                            self.setHeroTurn(False)
                     if event.key == pygame.K_RIGHT:
-                        self.move("RIGHT")
-                        self.setHeroTurn(False)
+                        if self.move("RIGHT"):
+                            self.setHeroTurn(False)

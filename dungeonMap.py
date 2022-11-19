@@ -1,9 +1,9 @@
+import random
 from enum import Enum
+from GUI import GraphicElement
 
-from Entity import Entity, EntityTypes
 
-
-class Tile_Type(Enum):
+class TileType(Enum):
     WALL = 1
     FLOOR = 2
     STAIRS = 3
@@ -13,27 +13,29 @@ class Tile_Type(Enum):
     EMPTY = 7
 
 
-class Tile(Entity):
-    def __init__(self):
-        self.setType(EntityTypes.ENVIRONMENT)
-
+class Tile:
+    items = []
     creature = None
-    tileType = Tile_Type.EMPTY
+    tileType = TileType.EMPTY
 
-    def can_pass(self):
-        # funkcja
-        if self.tileType in [Tile_Type.FLOOR, Tile_Type.EMPTY, Tile_Type.DOOR_OPEN, Tile_Type.STAIRS] \
+    def canPass(self):
+        if self.tileType in [TileType.FLOOR, TileType.EMPTY, TileType.DOOR_OPEN, TileType.STAIRS] \
                 and self.creature is None:
             return True
         else:
             return False
 
 
-class dungeonMap:
-    tileMap = [[Tile for i in range(100)] for j in range(100)]
-    for i in range(100):
-        for j in range(100):
-            tileMap[i][j].tileType = Tile_Type.FLOOR
-    for i in range(10, 25):
-        for j in range(5, 15):
-            tileMap[i][j].tileType = Tile_Type.WALL
+class DungeonMap:
+    tileMap = [[Tile() for i in range(100)] for j in range(100)]
+
+    def __init__(self):
+        for i in range(40):
+            for j in range(23):
+                temp = random.randint(0, 3)
+                if temp in (0, 1, 2):
+                    self.tileMap[i][j].tileType = TileType.FLOOR
+                    GraphicElement().initFloor(i, j)
+                elif temp == 3:
+                    self.tileMap[i][j].tileType = TileType.WALL
+                    GraphicElement().initWall(i, j)
