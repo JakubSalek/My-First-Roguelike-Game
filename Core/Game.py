@@ -1,7 +1,7 @@
-from GUI import GraphicElement
+from Graphics.GUI import GraphicElement
 from ActionQueue import ActionQueue
 from Creatures.PlayerCharacter import Hero
-from dungeonMap import DungeonMap
+from Map.DungeonMap import DungeonMap
 
 
 class GameEngine:

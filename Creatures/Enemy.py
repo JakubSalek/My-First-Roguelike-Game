@@ -1,12 +1,6 @@
 import random
-from enum import Enum
+from EnemyType import EnemyType
 from Creatures.Actor import Actor
-
-
-class EnemyType(Enum):
-    STUDENT = 1
-    TEACHER = 2
-    RAT = 3
 
 
 class Enemy(Actor):

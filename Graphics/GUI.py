@@ -1,7 +1,7 @@
 import pygame
 import SETTINGS
-from Creatures.Enemy import EnemyType
-from dungeonMap import TileType
+from Creatures.EnemyType import EnemyType
+from Map.TileType import TileType
 
 
 class GraphicElement:
@@ -11,10 +11,10 @@ class GraphicElement:
         self.backgroundGraphic.fill("Black")
         self.emptyTile = pygame.Surface(SETTINGS.TILE_SIZE)
         self.emptyTile.fill("Black")
-        self.playerGraphic = pygame.image.load("Assets/hero.png").convert_alpha()
-        self.ratGraphic = pygame.image.load("Assets/rat.png")
-        self.wallGraphic = self.surface = pygame.image.load("Assets/wall.png")
-        self.floorGraphic = self.surface = pygame.image.load("Assets/floor.png")
+        self.playerGraphic = pygame.image.load("Graphics/Assets/hero.png").convert_alpha()
+        self.ratGraphic = pygame.image.load("Graphics/Assets/rat.png")
+        self.wallGraphic = self.surface = pygame.image.load("Graphics/Assets/wall.png")
+        self.floorGraphic = self.surface = pygame.image.load("Graphics/Assets/floor.png")
 
     def getBackGround(self):
         return self.backgroundGraphic

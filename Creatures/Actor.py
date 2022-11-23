@@ -1,4 +1,4 @@
-from Statistics import Statistics
+from Creatures.Statistics import Statistics
 
 
 class Actor:
