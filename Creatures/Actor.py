@@ -1,5 +1,4 @@
 from Statistics import Statistics
-from dungeonMap import DungeonMap
 
 
 class Actor:
@@ -9,8 +8,11 @@ class Actor:
     positionY = int
     items = []
     stats = Statistics()
-    graphic = None
     inAction = False
+    dungeonMap = None
+
+    def setDungeonMap(self, dungeonMap):
+        self.dungeonMap = dungeonMap
 
     def getGraphic(self):
         return self.graphic
@@ -24,9 +26,9 @@ class Actor:
         self.positionY = y
 
     def move(self, offSetX=0, offSetY=0):
-        if DungeonMap.tileMap[self.positionX+offSetX][self.positionY+offSetY].canPass():
-            DungeonMap.tileMap[self.positionX][self.positionY].setCreature(None)
+        if self.dungeonMap[self.positionY+offSetY][self.positionX+offSetX].canPass():
+            self.dungeonMap[self.positionY][self.positionX].setCreature(None)
             self.positionX += offSetX
             self.positionY += offSetY
-            DungeonMap.tileMap[self.positionX][self.positionY].setCreature(self)
+            self.dungeonMap[self.positionY][self.positionX].setCreature(self)
             self.inAction = False

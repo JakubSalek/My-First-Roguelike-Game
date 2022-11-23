@@ -1,6 +1,5 @@
 import pygame
 from Creatures.Actor import Actor
-from GUI import GraphicElement
 
 
 # Klasa bohatera gry
@@ -12,7 +11,6 @@ class Hero(Actor):
         self.stats.initPlayer()
         self.positionX = 0
         self.positionY = 0
-        self.graphic = GraphicElement().initPlayer()
 
     # Obsługa ruchu gracza
     def playerMovement(self):

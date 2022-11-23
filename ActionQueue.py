@@ -16,7 +16,7 @@ class ActionQueue:
         self.currentTurn = turn
         if index == 0:
             cooldown = self.creatures[index].playerMovement()
-            self.gameQueue.put(((self.currentTurn+cooldown), index))
+            self.gameQueue.put(((self.currentTurn + cooldown), index))
         else:
             cooldown = self.creatures[index].enemyMovement()
-            self.gameQueue.put(((self.currentTurn+cooldown), index))
+            self.gameQueue.put(((self.currentTurn + cooldown), index))

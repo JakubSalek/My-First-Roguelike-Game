@@ -1,8 +1,6 @@
 import random
 from enum import Enum
 
-from GUI import GraphicElement
-
 
 class TileType(Enum):
     WALL = 1
@@ -21,7 +19,6 @@ class Tile:
         self.items = []
         self.creature = None
         self.tileType = TileType.EMPTY
-        self.graphic = GraphicElement().initBlackSquare(self.posX, self.posY)
 
     def getPosition(self):
         pos = (self.posX, self.posY)
@@ -40,11 +37,9 @@ class Tile:
 
     def initFloor(self):
         self.tileType = TileType.FLOOR
-        self.graphic = self.graphic.initFloor()
 
     def initWall(self):
         self.tileType = TileType.WALL
-        self.graphic = self.graphic.initWall()
 
 
 class DungeonMap:
@@ -58,4 +53,3 @@ class DungeonMap:
                     self.tileMap[i][j].initFloor()
                 elif temp == 3:
                     self.tileMap[i][j].initWall()
-
