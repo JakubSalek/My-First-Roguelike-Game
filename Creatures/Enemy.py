@@ -1,5 +1,5 @@
 import random
-from EnemyType import EnemyType
+from Creatures.ActorType import ActorType
 from Creatures.Actor import Actor
 
 
@@ -7,10 +7,10 @@ class Enemy(Actor):
     def __init__(self):
         self.name = "Rat"
         self.description = "It stinks"
-        self.enemyType = EnemyType.RAT
+        self.enemyType = ActorType.RAT
         self.stats.initRat()
-        self.positionX = random.randint(10, 20)
-        self.positionY = random.randint(5, 15)
+        self.positionX = 5
+        self.positionY = 5
 
     def enemyMovement(self):
         self.inAction = True

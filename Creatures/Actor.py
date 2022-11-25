@@ -1,4 +1,6 @@
+from Creatures.ActorType import ActorType
 from Creatures.Statistics import Statistics
+from Map.DungeonMap import DungeonMap
 
 
 class Actor:
@@ -9,13 +11,12 @@ class Actor:
     items = []
     stats = Statistics()
     inAction = False
-    dungeonMap = None
+    dungeonMap = DungeonMap.tileMap
+    actorType = ActorType.EMPTY
 
     def setDungeonMap(self, dungeonMap):
         self.dungeonMap = dungeonMap
-
-    def getGraphic(self):
-        return self.graphic
+        self.dungeonMap[self.positionY][self.positionX].actorType = self.actorType
 
     def getPosition(self):
         pos = (self.positionX, self.positionY)
@@ -26,9 +27,12 @@ class Actor:
         self.positionY = y
 
     def move(self, offSetX=0, offSetY=0):
-        if self.dungeonMap[self.positionY+offSetY][self.positionX+offSetX].canPass():
-            self.dungeonMap[self.positionY][self.positionX].setCreature(None)
+        action = self.dungeonMap[self.positionY + offSetY][self.positionX + offSetX].canPass()
+        if action in [2, -1, 1]:
+            self.dungeonMap[self.positionY][self.positionX].setCreature(ActorType.EMPTY)
             self.positionX += offSetX
             self.positionY += offSetY
-            self.dungeonMap[self.positionY][self.positionX].setCreature(self)
+            if action == 2:
+                self.dungeonMap[self.positionY][self.positionX].setCreature(self.actorType)
             self.inAction = False
+        return action

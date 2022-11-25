@@ -1,3 +1,4 @@
+from Creatures.ActorType import ActorType
 from Map.TileType import TileType
 
 
@@ -6,7 +7,7 @@ class Tile:
         self.posX = i
         self.posY = j
         self.items = []
-        self.creature = None
+        self.actorType = ActorType.EMPTY
         self.tileType = TileType.EMPTY
 
     def getPosition(self):
@@ -14,19 +15,31 @@ class Tile:
         return pos
 
     def setCreature(self, creature):
-        self.creature = creature
+        self.actorType = creature
 
-    # Tutaj trzeba pomyśleć co jak będzie chciało wejść we wroga lub drzwi np
+    def getCreature(self):
+        return self.actorType
+
+    # Sprawdzenie, czy gracz może przejść i w co wchodzi
     def canPass(self):
-        if self.tileType in [TileType.FLOOR, TileType.DOOR_OPEN, TileType.STAIRS] \
-                and self.creature is None:
-            return True
+        if self.tileType in [TileType.FLOOR, TileType.DOOR_OPEN, TileType.DOOR_CLOSED] \
+                and self.actorType is ActorType.EMPTY:
+            if self.tileType is TileType.DOOR_CLOSED:
+                self.tileType = TileType.DOOR_OPEN
+            # 2 - może przejść
+            return 2
+        elif self.tileType in [TileType.FLOOR, TileType.DOOR_OPEN] and self.actorType is not ActorType.EMPTY:
+            # 3 - atakuje wroga
+            return 3
+        elif self.tileType is TileType.STAIRS_UP:
+            # 1 - poziom w górę
+            return 1
+        elif self.tileType is TileType.STAIR_DOWN:
+            # -1 - poziom w dół
+            return -1
+        elif self.tileType is TileType.DOOR_KEY_LOCKED:
+            # Drzwi zamknięte na klucz
+            return 4
         else:
-            return False
-
-    def initFloor(self):
-        self.tileType = TileType.FLOOR
-
-    def initWall(self):
-        self.tileType = TileType.WALL
-
+            # Nie może przejść
+            return 0
