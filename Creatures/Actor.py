@@ -1,5 +1,6 @@
 from Creatures.ActorType import ActorType
-from Creatures.Statistics import Statistics
+from Creatures.ActorStatistics import Statistics
+from Map.ActionType import ActionType
 from Map.DungeonMap import DungeonMap
 
 
@@ -8,15 +9,15 @@ class Actor:
     description = ""
     positionX = int
     positionY = int
-    items = []
-    stats = Statistics()
+    stats = Statistics
     inAction = False
+    isDead = False
     dungeonMap = DungeonMap.tileMap
     actorType = ActorType.EMPTY
 
     def setDungeonMap(self, dungeonMap):
         self.dungeonMap = dungeonMap
-        self.dungeonMap[self.positionY][self.positionX].actorType = self.actorType
+        self.dungeonMap[self.positionY][self.positionX].actor = self
 
     def getPosition(self):
         pos = (self.positionX, self.positionY)
@@ -27,12 +28,21 @@ class Actor:
         self.positionY = y
 
     def move(self, offSetX=0, offSetY=0):
-        action = self.dungeonMap[self.positionY + offSetY][self.positionX + offSetX].canPass()
-        if action in [2, -1, 1]:
-            self.dungeonMap[self.positionY][self.positionX].setCreature(ActorType.EMPTY)
+        action = self.dungeonMap[self.positionY + offSetY][self.positionX + offSetX].canPass(self)
+        # Jeśli pole, na którym chce stanąć, jest wolne albo są na nim schody w górę lub w dół
+        if action in [ActionType.MOVE, ActionType.FLOOR_UP, ActionType.FLOOR_DOWN]:
+            self.dungeonMap[self.positionY][self.positionX].setCreature(None)
             self.positionX += offSetX
             self.positionY += offSetY
-            if action == 2:
-                self.dungeonMap[self.positionY][self.positionX].setCreature(self.actorType)
-            self.inAction = False
+            if action == ActionType.MOVE:
+                self.dungeonMap[self.positionY][self.positionX].setCreature(self)
+        elif action == ActionType.ATTACK_MONSTER:
+            attackedCreature = self.dungeonMap[self.positionY + offSetY][self.positionX + offSetX].getCreature()
+            attackedCreature.isDead = attackedCreature.stats.changeCurrentHP(-self.stats.currentStrength)
+            if attackedCreature.isDead:
+                self.dungeonMap[attackedCreature.positionY][attackedCreature.positionX].setCreature(None)
+        elif action == ActionType.ATTACK_PLAYER:
+            attackedCreature = self.dungeonMap[self.positionY + offSetY][self.positionX + offSetX].getCreature()
+            attackedCreature.isDead = attackedCreature.stats.changeCurrentHP(-self.stats.currentStrength)
+        self.inAction = False
         return action

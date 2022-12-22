@@ -13,8 +13,10 @@ class GraphicElement:
         self.emptyTile.fill("Black")
         self.playerGraphic = pygame.image.load("Graphics/Assets/hero.png").convert_alpha()
         self.ratGraphic = pygame.image.load("Graphics/Assets/rat.png")
-        self.wallGraphic = self.surface = pygame.image.load("Graphics/Assets/wall.png")
-        self.floorGraphic = self.surface = pygame.image.load("Graphics/Assets/floor.png")
+        self.wallGraphic = pygame.image.load("Graphics/Assets/wall.png")
+        self.floorGraphic = pygame.image.load("Graphics/Assets/floor.png")
+        self.stairsDownGraphic = pygame.image.load("Graphics/Assets/stairs_down.png")
+        self.stairsUpGraphic = pygame.image.load("Graphics/Assets/stairs_up.png")
 
     def getBackGround(self):
         return self.backgroundGraphic
@@ -25,9 +27,9 @@ class GraphicElement:
         elif tileType is TileType.WALL:
             return self.wallGraphic
         elif tileType is TileType.STAIR_DOWN:
-            return self.ratGraphic
+            return self.stairsDownGraphic
         elif tileType is TileType.STAIRS_UP:
-            return self.playerGraphic
+            return self.stairsUpGraphic
         else:
             return self.emptyTile
 
@@ -44,10 +46,18 @@ class GraphicElement:
         heroPosX, heroPosY = creatures[0].getPosition()
         for i in range(SETTINGS.TILES_IN_COL):
             for j in range(SETTINGS.TILES_IN_ROW):
-                screen.blit(self.getTileGraphics(dungeonMap[heroPosY - 11 + i][heroPosX - 20 + j].tileType),
+                screen.blit(self.getTileGraphics(dungeonMap[heroPosY - int(SETTINGS.TILES_IN_COL / 2) + i] \
+                                                     [heroPosX - int(SETTINGS.TILES_IN_ROW / 2) + j].tileType),
                             (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT))
-                creatureOnTile = self.getEnemyGraphics(dungeonMap[heroPosY - 11 + i][heroPosX - 20 + j].getCreature())
+                creatureOnTile = dungeonMap[heroPosY - int(SETTINGS.TILES_IN_COL / 2) + i] \
+                    [heroPosX - int(SETTINGS.TILES_IN_ROW / 2) + j].getCreature()
                 if creatureOnTile is not None:
-                    screen.blit(creatureOnTile, (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT))
+                    graphicsOfCreature = self.getEnemyGraphics(creatureOnTile.actorType)
+                    screen.blit(graphicsOfCreature, (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT))
+                    creatureHealthX = creatureOnTile.stats.currentHealth / creatureOnTile.stats.maxHealth
+                    if not 64*creatureHealthX < 0:
+                        healthBar = pygame.Surface((64 * creatureHealthX, 5))
+                        healthBar.fill("CRIMSON")
+                        screen.blit(healthBar, (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT + 59))
 
         pygame.display.update()

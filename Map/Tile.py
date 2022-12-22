@@ -1,4 +1,5 @@
 from Creatures.ActorType import ActorType
+from Map.ActionType import ActionType
 from Map.TileType import TileType
 
 
@@ -7,7 +8,7 @@ class Tile:
         self.posX = i
         self.posY = j
         self.items = []
-        self.actorType = ActorType.EMPTY
+        self.actor = None
         self.tileType = TileType.EMPTY
 
     def getPosition(self):
@@ -15,31 +16,34 @@ class Tile:
         return pos
 
     def setCreature(self, creature):
-        self.actorType = creature
+        self.actor = creature
 
     def getCreature(self):
-        return self.actorType
+        return self.actor
 
     # Sprawdzenie, czy gracz może przejść i w co wchodzi
-    def canPass(self):
+    def canPass(self, attacker):
         if self.tileType in [TileType.FLOOR, TileType.DOOR_OPEN, TileType.DOOR_CLOSED] \
-                and self.actorType is ActorType.EMPTY:
+                and self.actor is None:
             if self.tileType is TileType.DOOR_CLOSED:
                 self.tileType = TileType.DOOR_OPEN
-            # 2 - może przejść
-            return 2
-        elif self.tileType in [TileType.FLOOR, TileType.DOOR_OPEN] and self.actorType is not ActorType.EMPTY:
-            # 3 - atakuje wroga
-            return 3
+            return ActionType.MOVE
+        elif self.actor is not None:
+            if self.actor.actorType is ActorType.PLAYER and attacker.actorType is not ActorType.PLAYER:
+                return ActionType.ATTACK_PLAYER
+            elif self.actor.actorType is not ActorType.PLAYER and attacker.actorType is ActorType.PLAYER:
+                return ActionType.ATTACK_MONSTER
         elif self.tileType is TileType.STAIRS_UP:
-            # 1 - poziom w górę
-            return 1
+            if attacker.actorType is ActorType.PLAYER:
+                return ActionType.FLOOR_UP
+            else:
+                return ActionType.MOVE
         elif self.tileType is TileType.STAIR_DOWN:
-            # -1 - poziom w dół
-            return -1
+            if attacker.actorType is ActorType.PLAYER:
+                return ActionType.FLOOR_DOWN
+            else:
+                return ActionType.MOVE
         elif self.tileType is TileType.DOOR_KEY_LOCKED:
-            # Drzwi zamknięte na klucz
-            return 4
+            return ActionType.DOOR_LOCKED
         else:
-            # Nie może przejść
-            return 0
+            return ActionType.CANT_MOVE

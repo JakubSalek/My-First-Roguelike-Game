@@ -1,3 +1,9 @@
+from Items import ItemStats
+from Items.ItemSlotType import ItemSlotType
+
+
 class Item:
-    def __init__(self):
-        pass
+    name = ""
+    description = ""
+    possibleToWearSlots = ItemSlotType.NONE
+    stats = ItemStats

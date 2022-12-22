@@ -8,3 +8,6 @@ class Inventory:
     bootsSlot = Item
     weaponSlot = Item
     ringSlot = Item
+
+    def __init__(self):
+        self.maxBackPackSlots = 15

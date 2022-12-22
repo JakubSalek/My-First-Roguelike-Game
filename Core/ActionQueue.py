@@ -6,7 +6,7 @@ class ActionQueue:
     def __init__(self, creatures, turn):
         self.gameQueue = PriorityQueue()
         for i in range(len(creatures)):
-            self.gameQueue.put((0, i))
+            self.gameQueue.put((turn, i))
         self.currentTurn = turn
 
     def getTurn(self):
@@ -21,8 +21,11 @@ class ActionQueue:
             self.gameQueue.put(((self.currentTurn + cooldown), index))
             return action
         else:
-            cooldown = creatures[index].enemyMovement()
-            self.gameQueue.put(((self.currentTurn + cooldown), index))
+            if creatures[index].isDead:
+                creatures[index] = None
+            else:
+                cooldown = creatures[index].enemyMovement()
+                self.gameQueue.put(((self.currentTurn + cooldown), index))
             return 100
 
     # Symuluj ruchy po powrocie na poziom wcześniej
@@ -32,4 +35,5 @@ class ActionQueue:
                 turn, index = self.gameQueue.get()
                 self.currentTurn = turn
                 cooldown = creatures[index-1].enemyMovement()
-                self.gameQueue.put((self.currentTurn + cooldown), index)
+                self.gameQueue.put(((self.currentTurn + cooldown), index))
+
