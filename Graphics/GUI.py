@@ -17,6 +17,11 @@ class GraphicElement:
         self.floorGraphic = pygame.image.load("Graphics/Assets/floor.png")
         self.stairsDownGraphic = pygame.image.load("Graphics/Assets/stairs_down.png")
         self.stairsUpGraphic = pygame.image.load("Graphics/Assets/stairs_up.png")
+        # Character Info
+        self.characterInfoBG = pygame.Surface((230, 145))
+        self.characterInfoBG.fill("GRAY")
+        self.healthBarBG = pygame.Surface((200, 50))
+        self.expBarBG = pygame.Surface((200, 50))
 
     def getBackGround(self):
         return self.backgroundGraphic
@@ -54,10 +59,24 @@ class GraphicElement:
                 if creatureOnTile is not None:
                     graphicsOfCreature = self.getEnemyGraphics(creatureOnTile.actorType)
                     screen.blit(graphicsOfCreature, (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT))
-                    creatureHealthX = creatureOnTile.stats.currentHealth / creatureOnTile.stats.maxHealth
-                    if not 64*creatureHealthX < 0:
-                        healthBar = pygame.Surface((64 * creatureHealthX, 5))
-                        healthBar.fill("CRIMSON")
-                        screen.blit(healthBar, (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT + 59))
+                    if creatureOnTile.actorType != ActorType.PLAYER:
+                        creatureHealthX = creatureOnTile.stats.currentHealth / creatureOnTile.stats.maxHealth
+                        if not 64 * creatureHealthX < 0:
+                            healthBar = pygame.Surface((64 * creatureHealthX, 5))
+                            healthBar.fill("CRIMSON")
+                            screen.blit(healthBar, (j * SETTINGS.TILE_WIDTH, i * SETTINGS.TILE_HEIGHT + 59))
+
+    def printCharacterInfo(self, screen, hero):
+        screen.blit(self.characterInfoBG, (0, 0))
+        screen.blit(self.healthBarBG, (15, 15))
+        screen.blit(self.expBarBG, (15, 80))
+        hpPrecent = (hero.stats.currentHealth / hero.stats.maxHealth)
+        XPPrecent = (hero.stats.currentExperience / hero.stats.maxExperience)
+        currentHPBar = pygame.Surface((hpPrecent * 200, 50))
+        currentHPBar.fill("CRIMSON")
+        screen.blit(currentHPBar, (15, 15))
+        currentXPBar = pygame.Surface((XPPrecent * 200, 50))
+        currentXPBar.fill("GREEN")
+        screen.blit(currentXPBar, (15, 80))
 
         pygame.display.update()

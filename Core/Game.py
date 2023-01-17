@@ -11,8 +11,7 @@ from Map.DungeonMap import DungeonMap
 class GameEngine:
 
     # Inicjacja pierwszego poziomu i głównych zmiennych silnika
-    def __init__(self, screen, clock):
-        self.clock = clock
+    def __init__(self, screen):
         self.screen = screen
         self.currentLevel = 0
         self.maxLevel = 0
@@ -39,6 +38,7 @@ class GameEngine:
         while True:
             self.GUI.printMap(self.screen, self.mapsArr[self.currentLevel].tileMap,
                               self.enemiesArr[self.currentLevel])
+            self.GUI.printCharacterInfo(self.screen, self.enemiesArr[self.currentLevel][0])
             action = self.queuesArr[self.currentLevel].nextTurn(self.enemiesArr[self.currentLevel])
             if action == ActionType.FLOOR_UP:
                 self.decrementLevel()
@@ -81,10 +81,9 @@ class GameEngine:
 
     # Generowanie przeciwników na poziomie lochu
     def generateEnemies(self):
-        for i in range(5):
+        for i in range(10):
             self.enemiesArr[self.currentLevel].append(Enemy(ActorType.RAT))
-        for enemy in self.enemiesArr[self.currentLevel]:
-            enemy.setDungeonMap(self.mapsArr[self.currentLevel].tileMap)
+            self.enemiesArr[self.currentLevel][i+1].setDungeonMap(self.mapsArr[self.currentLevel].tileMap)
 
     # Generowanie nowego poziomu lochu
     def generateNextLevel(self):
