@@ -10,6 +10,7 @@ class Tile:
         self.items = []
         self.actor = None
         self.tileType = TileType.EMPTY
+        self.flooded = False
 
     def getPosition(self):
         pos = (self.posX, self.posY)

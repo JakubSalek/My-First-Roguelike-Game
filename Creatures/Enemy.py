@@ -17,8 +17,8 @@ class Enemy(Actor):
         self.description = "It stinks"
         self.actorType = ActorType.RAT
         self.stats = Statistics(self.actorType)
-        self.positionX = random.randint(0, 50)
-        self.positionY = random.randint(0, 50)
+        self.positionX = random.randint(20, 80)
+        self.positionY = random.randint(20, 80)
 
     def enemyMovement(self):
         self.inAction = True

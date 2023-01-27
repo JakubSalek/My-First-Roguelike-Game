@@ -19,7 +19,7 @@ class GraphicElement:
         self.stairsUpGraphic = pygame.image.load("Graphics/Assets/stairs_up.png")
         # Character Info
         self.characterInfoBG = pygame.Surface((230, 145))
-        self.characterInfoBG.fill("GRAY")
+        self.characterInfoBG.fill("DARKGREY")
         self.healthBarBG = pygame.Surface((200, 50))
         self.expBarBG = pygame.Surface((200, 50))
 

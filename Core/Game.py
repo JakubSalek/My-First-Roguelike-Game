@@ -18,8 +18,10 @@ class GameEngine:
         self.maxTurn = 0
         # Tablica obiektów map zawierających w sobie dwuwymiarowe tablice map
         self.mapsArr = [DungeonMap()]
-        self.mapsArr[0].generateMap(self.currentLevel)
+        self.mapsArr[0].generateMap(self.currentLevel, (21, 21))
         self.player = Hero()
+        x, y = self.mapsArr[0].stairsUpPos
+        self.player.setPosition(x, y)
         self.player.setDungeonMap(self.mapsArr[self.currentLevel].tileMap)
         # Dwuwymiarowa tablica potworów
         self.enemiesArr = [[Actor() for j in range(1)] for i in range(15)]
@@ -90,7 +92,7 @@ class GameEngine:
         self.maxLevel += 1
         self.enemiesArr[self.currentLevel][0] = self.player
         self.mapsArr.append(DungeonMap())
-        self.mapsArr[self.currentLevel].generateMap(self.currentLevel)
+        self.mapsArr[self.currentLevel].generateMap(self.currentLevel, self.mapsArr[self.currentLevel-1].stairsDownPos)
         self.player.setDungeonMap(self.mapsArr[self.currentLevel].tileMap)
         x, y = self.player.getPosition()
         self.mapsArr[self.currentLevel].tileMap[y][x].actorType = ActorType.PLAYER

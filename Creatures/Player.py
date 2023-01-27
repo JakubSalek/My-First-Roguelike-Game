@@ -12,8 +12,8 @@ class Hero(Actor):
     def __init__(self):
         self.name = "Hero of The Game"
         self.description = "Student of University of Marie Curie Skłodowska. Let's trust he passes his exam"
-        self.positionX = 0
-        self.positionY = 0
+        self.positionX = None
+        self.positionY = None
         self.actorType = ActorType.PLAYER
         self.stats = Statistics(self.actorType)
         self.inventory = Inventory()
