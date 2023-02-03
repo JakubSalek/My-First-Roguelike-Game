@@ -13,6 +13,8 @@ class GraphicElement:
         self.emptyTile.fill("Black")
         self.playerGraphic = pygame.image.load("Graphics/Assets/hero.png").convert_alpha()
         self.ratGraphic = pygame.image.load("Graphics/Assets/rat.png")
+        self.bugGraphic = pygame.image.load("Graphics/Assets/bug.png")
+        self.studentGraphic = pygame.image.load("Graphics/Assets/student.png")
         self.wallGraphic = pygame.image.load("Graphics/Assets/wall.png")
         self.floorGraphic = pygame.image.load("Graphics/Assets/floor.png")
         self.stairsDownGraphic = pygame.image.load("Graphics/Assets/stairs_down.png")
@@ -43,6 +45,10 @@ class GraphicElement:
             return self.playerGraphic
         elif actorType is ActorType.RAT:
             return self.ratGraphic
+        elif actorType is ActorType.STUDENT:
+            return self.studentGraphic
+        elif actorType is ActorType.BUG:
+            return self.bugGraphic
         else:
             return None
 

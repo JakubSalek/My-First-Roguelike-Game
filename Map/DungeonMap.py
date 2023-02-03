@@ -16,10 +16,10 @@ def floodFill(tile, dungMap):
             n.flooded = True
             if n.tileType is TileType.STAIR_DOWN:
                 canGoDown = True
-            q.put(dungMap[n.posX-1][n.posY])
-            q.put(dungMap[n.posX+1][n.posY])
-            q.put(dungMap[n.posX][n.posY+1])
-            q.put(dungMap[n.posX][n.posY-1])
+            q.put(dungMap[n.posY-1][n.posX])
+            q.put(dungMap[n.posY+1][n.posX])
+            q.put(dungMap[n.posY][n.posX+1])
+            q.put(dungMap[n.posY][n.posX-1])
     return canGoDown
 
 
@@ -38,16 +38,16 @@ class DungeonMap:
                 self.tileMap[i][j].tileType = TileType.WALL
 
         self.stairsUpPos = stairsPos
-        x, y = self.stairsUpPos
-        self.tileMap[x][y].tileType = TileType.STAIRS_UP
+        y, x = self.stairsUpPos
+        self.tileMap[y][x].tileType = TileType.STAIRS_UP
 
         stairsDownOnPlace = False
         while not stairsDownOnPlace:
             stairDownX = random.randint(21, 79)
             stairDownY = random.randint(21, 79)
-            if self.tileMap[stairDownX][stairDownY].tileType is TileType.WALL:
-                self.tileMap[stairDownX][stairDownY].tileType = TileType.STAIR_DOWN
-                self.stairsDownPos = (stairDownX, stairDownY)
+            if self.tileMap[stairDownY][stairDownX].tileType is TileType.WALL:
+                self.tileMap[stairDownY][stairDownX].tileType = TileType.STAIR_DOWN
+                self.stairsDownPos = (stairDownY, stairDownX)
                 stairsDownOnPlace = True
 
         wayToStairs = False
@@ -56,13 +56,13 @@ class DungeonMap:
             while not filled:
                 wallX = random.randint(21, 79)
                 wallY = random.randint(21, 79)
-                if self.tileMap[wallX][wallY].tileType is TileType.WALL:
-                    self.tileMap[wallX][wallY].tileType = TileType.FLOOR
+                if self.tileMap[wallY][wallX].tileType is TileType.WALL:
+                    self.tileMap[wallY][wallX].tileType = TileType.FLOOR
                     filled = True
                     for i in range(21, 80):
                         for j in range(21, 80):
                             self.tileMap[i][j].flooded = False
-                    wayToStairs = floodFill(self.tileMap[x][y], self.tileMap)
+                    wayToStairs = floodFill(self.tileMap[y][x], self.tileMap)
 
     def populateMap(self, currentLevel):
         pass

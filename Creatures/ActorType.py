@@ -7,3 +7,4 @@ class ActorType(Enum):
     STUDENT = 3
     TEACHER = 4
     RAT = 5
+    BUG = 6

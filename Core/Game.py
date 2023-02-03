@@ -83,9 +83,18 @@ class GameEngine:
 
     # Generowanie przeciwników na poziomie lochu
     def generateEnemies(self):
-        for i in range(10):
+        allCounter = 0
+        for i in range(self.currentLevel+5):
             self.enemiesArr[self.currentLevel].append(Enemy(ActorType.RAT))
-            self.enemiesArr[self.currentLevel][i+1].setDungeonMap(self.mapsArr[self.currentLevel].tileMap)
+            allCounter += 1
+        for i in range(self.currentLevel+10):
+            self.enemiesArr[self.currentLevel].append(Enemy(ActorType.BUG))
+            allCounter += 1
+        for i in range(self.currentLevel+1):
+            self.enemiesArr[self.currentLevel].append(Enemy(ActorType.STUDENT))
+            allCounter += 1
+        for i in range(allCounter):
+            self.enemiesArr[self.currentLevel][i + 1].setDungeonMap(self.mapsArr[self.currentLevel].tileMap)
 
     # Generowanie nowego poziomu lochu
     def generateNextLevel(self):

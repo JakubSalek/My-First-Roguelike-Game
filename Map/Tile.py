@@ -30,7 +30,7 @@ class Tile:
                 self.tileType = TileType.DOOR_OPEN
             return ActionType.MOVE
         elif self.actor is not None:
-            if self.actor.actorType is ActorType.PLAYER and attacker.actorType is not ActorType.PLAYER:
+            if self.actor.actorType is ActorType.PLAYER:
                 return ActionType.ATTACK_PLAYER
             elif self.actor.actorType is not ActorType.PLAYER and attacker.actorType is ActorType.PLAYER:
                 return ActionType.ATTACK_MONSTER

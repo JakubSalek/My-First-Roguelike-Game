@@ -22,21 +22,41 @@ class Statistics:
             self.currentStrength = self.baseStrength
             self.baseAgility = 10
             self.currentAgility = self.baseAgility
-            self.maxHealth = 20
+            self.maxHealth = 30
             self.currentHealth = self.maxHealth
             self.currentExperience = 0
             self.maxExperience = 10
-            self.attackCoolDown = 3.0
+            self.attackCoolDown = 1.0
             self.movementCoolDown = 1.0
         elif actorType is ActorType.RAT:
-            self.baseStrength = 2
+            self.baseStrength = 4
             self.currentStrength = self.baseStrength
-            self.baseAgility = 3
+            self.baseAgility = 5
             self.currentAgility = self.baseAgility
-            self.maxHealth = 100
+            self.maxHealth = 15
             self.currentHealth = self.maxHealth
-            self.attackCoolDown = 3.0
-            self.movementCoolDown = 3.0
+            self.attackCoolDown = 0.75
+            self.movementCoolDown = 1.5
+            self.expOnDeath = 10
+        elif actorType is ActorType.STUDENT:
+            self.baseStrength = 8
+            self.currentStrength = self.baseStrength
+            self.baseAgility = 7
+            self.currentAgility = self.baseAgility
+            self.maxHealth = 30
+            self.currentHealth = self.maxHealth
+            self.attackCoolDown = 5.0
+            self.movementCoolDown = 2.0
+            self.expOnDeath = 15
+        elif actorType is ActorType.BUG:
+            self.baseStrength = 1
+            self.currentStrength = self.baseStrength
+            self.baseAgility = 5
+            self.currentAgility = self.baseAgility
+            self.maxHealth = 5
+            self.currentHealth = self.maxHealth
+            self.attackCoolDown = 0.3
+            self.movementCoolDown = 0.8
             self.expOnDeath = 5
 
     def changeCurrentHP(self, health):
